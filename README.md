@@ -12,7 +12,7 @@ Nu este un dispozitiv medical. Nu oferă sfaturi medicale, nu pune diagnostice �
 
 ## Instalare
 
-1. Deschide adresa aplicației în Chrome pe telefon: `https://costi1622.github.io/Glucolog/`
+1. Deschide adresa aplicației în Chrome pe telefon: `https://costi1622.github.io/nivelo-beta-stabil`
 2. Meniul Chrome (⋮) → „Instalează aplicația" / „Adaugă la ecranul de pornire".
 3. Deschide aplicația instalată. Funcționează offline; datele se salvează local.
 
