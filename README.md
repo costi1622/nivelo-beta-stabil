@@ -42,7 +42,7 @@ Aplicația e folosită zilnic de autor și de soția lui. Nu e publicată într-
 
 Nu se colectează și nu se transmite niciun fel de date. Totul stă local pe dispozitiv.
 
-Versiunea curentă este **v1.96** (4 octombrie 2026). Ciclul principal de dezvoltare s-a încheiat la 31 iulie 2026; de atunci, aplicația a continuat să primească îmbunătățiri ieșite din folosirea zilnică — raportul pentru medic adus la nivelul ecranului, căutarea insensibilă la diacritice, interfața trecută integral pe desene proprii, și o serie de reparații găsite prin verificare sistematică. Istoricul complet e în [CHANGELOG.md](CHANGELOG.md).
+Versiunea curentă este **v1.97** (4 octombrie 2026). Ciclul principal de dezvoltare s-a încheiat la 31 iulie 2026; de atunci, aplicația a continuat să primească îmbunătățiri ieșite din folosirea zilnică — raportul pentru medic adus la nivelul ecranului, căutarea insensibilă la diacritice, interfața trecută integral pe desene proprii, și o serie de reparații găsite prin verificare sistematică. Istoricul complet e în [CHANGELOG.md](CHANGELOG.md).
 
 Din v1.41, aplicația are o politică de securitate a conținutului care face ca **browserul însuși** să refuze orice încercare de a trimite date către un server. Promisiunea nu mai depinde doar de codul aplicației, ci e impusă din afara lui.
 
