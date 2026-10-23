@@ -1095,6 +1095,106 @@ main{overflow-x:clip}
 .dgbara{display:block; height:6px; border-radius:3px; margin-top:7px; background:color-mix(in srgb, var(--ink-soft) 16%, transparent); overflow:hidden}
 .dgbara i{display:block; height:100%; border-radius:3px}
 @media (prefers-reduced-motion:reduce){ .qagv{transition:none} }
+
+/* v2.12 — glicemiile pe 7 zile și „Când măsori" */
+.agpleg i.pt{width:9px; height:9px; border-radius:50%; vertical-align:0}
+.cmas{margin-top:12px; padding-top:10px; border-top:1px solid var(--line)}
+.cmgrid{display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-top:8px; text-align:center}
+.cmbar{height:38px; display:flex; align-items:flex-end; justify-content:center; background:color-mix(in srgb, var(--ink-soft) 8%, transparent); border-radius:6px; overflow:hidden}
+.cmbar i{display:block; width:100%; background:var(--petrol); opacity:.75; border-radius:6px 6px 0 0}
+.cmcol b{display:block; font-size:calc(14px*var(--fs)); font-weight:800; margin-top:4px}
+.cmcol span{display:block; font-size:calc(11px*var(--fs)); color:var(--ink-soft)}
+
+/* ===== v2.12.1: cadranul, graficul zilei, bifa, bara de jos, ecranele goale ===== */
+#heroCard::after{content:""; position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:0; transition:opacity .8s ease;
+  background:radial-gradient(130px 130px at 62px 62px, var(--zonc, transparent) 0%, transparent 100%)}
+#heroCard[data-zona]::after{opacity:calc(var(--zono,.2) * var(--zonv,1))}
+#heroCard[data-zona="jos"]{--zonc:var(--low)} #heroCard[data-zona="tinta"]{--zonc:var(--ok)}
+#heroCard[data-zona="sus"]{--zonc:var(--high)} #heroCard[data-zona="fsus"]{--zonc:var(--vhigh)}
+html[data-theme="dark"] #heroCard{--zono:.26}
+.sparkarie{opacity:.3; animation:sparkArie .6s ease-out .55s both}
+html[data-theme="dark"] .sparkarie{opacity:.36}
+@keyframes sparkArie{from{opacity:0}}
+.sparkpuls{transform-box:fill-box; transform-origin:center; opacity:0; animation:sparkPuls 1.1s ease-out 1.05s 3}
+@keyframes sparkPuls{0%{opacity:.75; transform:scale(1)} 100%{opacity:0; transform:scale(3.2)}}
+#toast .tbifa{display:inline-block; vertical-align:-4px; margin-right:7px; line-height:0}
+#toast .tbifa svg{display:block}
+#toast .tbifa path{stroke-dasharray:1; stroke-dashoffset:1}
+#toast.on .tbifa path{animation:tbifa .32s ease-out .12s forwards}
+#toast.on .tbifa circle{transform-box:fill-box; transform-origin:center; animation:tbifaCerc .24s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes tbifa{to{stroke-dashoffset:0}}
+@keyframes tbifaCerc{from{transform:scale(.4)}}
+/* bara de jos: o mișcare scurtă, a fiecărei iconițe, când devine activă (doar în bară, nu în copiile ei de pe plăcuțe) */
+@media (prefers-reduced-motion:no-preference){
+#tabs button.on[data-v="today"] .ico svg g > g{transform-box:view-box; transform-origin:12px 12px; animation:tabSoare .6s cubic-bezier(.3,.9,.4,1)}
+#tabs button.on[data-v="today"] .ico svg g > circle{transform-box:fill-box; transform-origin:center; animation:tabMiez .45s ease-out}
+@keyframes tabSoare{from{transform:rotate(-45deg)}}
+@keyframes tabMiez{40%{transform:scale(1.18)}}
+#tabs button.on[data-v="hist"] .ico svg path{transform-box:view-box; transform-origin:12px 12px}
+#tabs button.on[data-v="hist"] .ico svg path:last-child{animation:tabAc .6s cubic-bezier(.3,.9,.4,1)}
+#tabs button.on[data-v="hist"] .ico svg path:not(:last-child){animation:tabInapoi .6s cubic-bezier(.3,.9,.4,1)}
+@keyframes tabAc{from{transform:rotate(-300deg)}}
+@keyframes tabInapoi{from{transform:rotate(40deg)}}
+#tabs button.on[data-v="foods"] .ico svg{transform-origin:50% 85%; animation:tabBol .55s ease-out}
+@keyframes tabBol{25%{transform:rotate(-13deg)} 60%{transform:rotate(8deg)} 85%{transform:rotate(-3deg)}}
+#tabs button.on[data-v="stats"] .ico svg rect{transform-box:fill-box; transform-origin:50% 100%; animation:tabBara .45s cubic-bezier(.3,1.3,.5,1) backwards}
+#tabs button.on[data-v="stats"] .ico svg rect:nth-child(2){animation-delay:.07s} #tabs button.on[data-v="stats"] .ico svg rect:nth-child(3){animation-delay:.14s}
+@keyframes tabBara{from{transform:scaleY(.25)}}
+#tabs button.on[data-v="stats"] .ico svg path{stroke-dasharray:22; stroke-dashoffset:0; animation:tabLinie .5s ease-out .12s backwards}
+@keyframes tabLinie{from{stroke-dashoffset:22}}
+#tabs button.on[data-v="more"] .ico svg rect{transform-box:fill-box; transform-origin:center; animation:tabPatrat .4s cubic-bezier(.3,1.5,.5,1) backwards}
+#tabs button.on[data-v="more"] .ico svg rect:nth-child(3){animation-delay:.06s} #tabs button.on[data-v="more"] .ico svg rect:nth-child(4){animation-delay:.12s} #tabs button.on[data-v="more"] .ico svg rect:nth-child(2){animation-delay:.18s}
+@keyframes tabPatrat{from{transform:scale(.45)}}
+}
+/* ecranele goale */
+.empty .ei .ilus{position:relative; display:block; width:120px; height:92px; margin:0 auto 4px}
+.ilus .ilf{position:absolute; left:50%; top:46%; width:78px; height:78px; margin:-39px 0 0 -39px; border-radius:50%; background:color-mix(in srgb, var(--ic) 13%, transparent)}
+.ilus .ilp{position:absolute; left:50%; top:46%; transform:translate(-50%,-50%); line-height:0; animation:ilusPlac .5s cubic-bezier(.3,1.4,.5,1) both}
+.ilus .ilp .plac{margin:0}
+.ilus .ilu{position:absolute; left:50%; bottom:2px; width:44px; height:6px; margin-left:-22px; border-radius:50%; background:color-mix(in srgb, var(--ic) 22%, transparent); filter:blur(1px)}
+.ilus .ild{position:absolute; display:block; background:var(--ic); animation:ilusPop .4s cubic-bezier(.3,1.6,.5,1) both}
+.ilus .d1{left:12px; top:16px; width:9px; height:9px; border-radius:3px; transform:rotate(18deg); opacity:.45; animation-delay:.2s}
+.ilus .d2{right:14px; top:8px; width:7px; height:7px; border-radius:50%; opacity:.6; animation-delay:.28s}
+.ilus .d3{right:8px; top:52px; width:11px; height:11px; border-radius:50%; opacity:.25; animation-delay:.34s}
+.ilus .d4{left:20px; top:60px; width:6px; height:6px; border-radius:2px; transform:rotate(-12deg); opacity:.5; animation-delay:.4s}
+@keyframes ilusPlac{from{opacity:0; transform:translate(-50%,-38%) scale(.8)}}
+@keyframes ilusPop{from{opacity:0; scale:.2}}
+@media (prefers-reduced-motion:reduce){
+  .sparkarie, .sparkpuls, #toast.on .tbifa path, #toast.on .tbifa circle, .ilus .ilp, .ilus .ild{animation:none}
+  #toast .tbifa path{stroke-dashoffset:0} .sparkpuls{display:none}
+}
+
+/* ===== v2.12.2: luna, plăcuțele care reacționează, noaptea la notare ===== */
+#tabs button[data-v="today"] .ico svg > g{transition:opacity .5s ease}
+#tabs button[data-v="today"].luna .ico svg > g:not(.lunad){opacity:0}
+#tabs button[data-v="today"].luna .ico svg > g.lunad{opacity:1}
+@media (prefers-reduced-motion:no-preference){
+  #tabs button.on.luna[data-v="today"] .ico svg > g.lunad{transform-box:view-box; transform-origin:12px 12px; animation:tabLuna .6s cubic-bezier(.3,.9,.4,1)}
+  @keyframes tabLuna{from{transform:rotate(-30deg)}}
+  /* butoanele de notare: fiecare desen face gestul lui la atingere */
+  #quick button.apasat .i-gluc svg path:nth-child(3){transform-box:fill-box; transform-origin:50% 100%; animation:qPicatura .45s cubic-bezier(.3,1.4,.5,1)}
+  #quick button.apasat .i-gluc svg path:nth-child(2){stroke-dasharray:30; animation:qArc .5s ease-out}
+  @keyframes qPicatura{0%{transform:translateY(-3.5px) scale(.85,1.15)} 60%{transform:translateY(.6px) scale(1.08,.9)}}
+  @keyframes qArc{from{stroke-dashoffset:30}}
+  #quick button.apasat .i-meal svg path:nth-child(3){transform-box:view-box; transform-origin:12px 12.4px; animation:qFelie .55s cubic-bezier(.3,.9,.4,1)}
+  #quick button.apasat .i-meal svg path:nth-child(4), #quick button.apasat .i-meal svg path:nth-child(5){animation:qTacam .4s cubic-bezier(.3,1.5,.5,1)}
+  #quick button.apasat .i-meal svg path:nth-child(5){animation-delay:.05s}
+  #quick button.apasat .i-meal svg .abur{animation:qAbur .65s ease-out}
+  @keyframes qFelie{from{transform:rotate(-200deg)}}
+  @keyframes qTacam{40%{transform:translateY(-2.2px)}}
+  @keyframes qAbur{0%{opacity:0; transform:translateY(2px)} 35%{opacity:.9} 100%{opacity:0; transform:translateY(-2px)}}
+  #quick button.apasat .i-ins svg g > rect:nth-child(4), #quick button.apasat .i-ins svg g > path:nth-child(5){animation:qPiston .45s cubic-bezier(.3,1.2,.5,1)}
+  @keyframes qPiston{45%{transform:translateX(2.2px)}}
+  #quick button.apasat .i-note svg path:nth-child(1), #quick button.apasat .i-note svg path:nth-child(2), #quick button.apasat .i-note svg path:nth-child(3){transform-box:view-box; transform-origin:12px 12px; animation:qPagina .45s cubic-bezier(.3,1.3,.5,1)}
+  #quick button.apasat .i-note svg path:nth-child(4){animation:qSemn .45s cubic-bezier(.3,1.5,.5,1) .08s backwards}
+  @keyframes qPagina{from{transform:scaleX(.35)}}
+  @keyframes qSemn{from{transform:translateY(-3px); opacity:0}}
+}
+/* fereastra de noapte: mai întunecat și în spate */
+/* fundalul din spate, mai întunecat; prin clasă pusă din cod, nu prin :has() — un selector
+   body:has(...) aici încetinea derularea Istoricului de ~5 ori (măsurat: 34 → 6 cadre/s) */
+#veil.noapte, #veil2.noapte{background:rgba(4,9,12,.72)}
+div[data-noapte]{color:var(--ink); color-scheme:dark}   /* și câmpurile native (ora, data) se deschid întunecat */
 </style>
 </head>
 <body>
@@ -1180,7 +1280,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     </div>
     <div id="quick">
       <button onclick="shGluc()"><span class="ico i-gluc" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M5.3 18.2a8.4 8.4 0 1 1 13.4 0" fill="none" stroke="#fff" stroke-opacity=".32" stroke-width="2.2" stroke-linecap="round"/><path d="M5.3 18.2a8.4 8.4 0 0 1 9.6-13.1" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><path d="M12 7.4c2.5 3 3.9 5 3.9 6.9a3.9 3.9 0 0 1-7.8 0c0-1.9 1.4-3.9 3.9-6.9z" fill="#fff"/><path d="M10.3 13.9c-.3.6-.4 1.3-.3 1.9" fill="none" stroke="#0E7C7B" stroke-opacity=".5" stroke-width="1.1" stroke-linecap="round"/></svg></span>Glicemie</button>
-      <button onclick="shMeal()"><span class="ico i-meal" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12.4" r="7.4" fill="#fff"/><circle cx="12" cy="12.4" r="5.1" fill="#C2703C" fill-opacity=".16"/><path d="M12 12.4V7.3a5.1 5.1 0 0 1 4.6 2.9z" fill="#C2703C" fill-opacity=".75"/><path d="M2.6 3.6v3.6a1.4 1.4 0 0 0 1.4 1.4v11M4 3.6v3.2M5.4 3.6v3.6a1.4 1.4 0 0 1-1.4 1.4" fill="none" stroke="#fff" stroke-width="1.15" stroke-linecap="round"/><path d="M21.2 3.6c-1.5.8-2 2.6-2 4.4v2.3h2v9.3" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Masă</button>
+      <button onclick="shMeal()"><span class="ico i-meal" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12.4" r="7.4" fill="#fff"/><circle cx="12" cy="12.4" r="5.1" fill="#C2703C" fill-opacity=".16"/><path d="M12 12.4V7.3a5.1 5.1 0 0 1 4.6 2.9z" fill="#C2703C" fill-opacity=".75"/><path d="M2.6 3.6v3.6a1.4 1.4 0 0 0 1.4 1.4v11M4 3.6v3.2M5.4 3.6v3.6a1.4 1.4 0 0 1-1.4 1.4" fill="none" stroke="#fff" stroke-width="1.15" stroke-linecap="round"/><path d="M21.2 3.6c-1.5.8-2 2.6-2 4.4v2.3h2v9.3" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path class="abur" d="M10.2 4.4c-.9-.8.7-1.5-.1-2.6M13.8 4.4c-.9-.8.7-1.5-.1-2.6" fill="none" stroke="#fff" stroke-width="1.1" stroke-linecap="round" opacity="0"/></svg></span>Masă</button>
       <button onclick="shIns()"><span class="ico i-ins" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><g transform="rotate(-40 12 12)"><rect x="2.4" y="8.9" width="14.4" height="6.2" rx="2.6" fill="#fff"/><rect x="9.4" y="10.1" width="5.2" height="3.8" rx=".9" fill="#3F5E8C" fill-opacity=".6"/><path d="M10.6 10.1v1.4M11.9 10.1v2M13.2 10.1v1.4" stroke="#fff" stroke-width=".7"/><rect x=".6" y="8.2" width="3" height="7.6" rx="1.3" fill="#fff"/><path d="M.9 10.1h2.4M.9 12h2.4M.9 13.9h2.4" stroke="#3F5E8C" stroke-opacity=".4" stroke-width=".6"/><path d="M16.8 10.2l2.4.9v1.8l-2.4.9z" fill="#fff" fill-opacity=".85"/><path d="M19.2 12h3.6" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/><rect x="4.6" y="9.9" width="3.4" height="1.1" rx=".5" fill="#3F5E8C" fill-opacity=".22"/></g></svg></span>Insulină</button>
       <button onclick="shNote()"><span class="ico i-note" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M3.2 5.6c2.9-1.2 5.9-1 8.8.8v13.2c-2.9-1.8-5.9-2-8.8-.8z" fill="#fff"/><path d="M20.8 5.6c-2.9-1.2-5.9-1-8.8.8v13.2c2.9-1.8 5.9-2 8.8-.8z" fill="#fff" fill-opacity=".78"/><path d="M5.3 9.1c1.6-.4 3.1-.2 4.6.5M5.3 11.9c1.6-.4 3.1-.2 4.6.5M5.3 14.7c1.6-.4 3.1-.2 4.6.5" stroke="#6B7A85" stroke-opacity=".45" stroke-width=".9" stroke-linecap="round"/><path d="M15.8 3.6h2.6v6.6l-1.3-1-1.3 1z" fill="#E2774F"/></svg></span>Altele</button>
     </div>
@@ -1257,13 +1357,13 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       <button class="mrow" onclick="shUpdate()"><span class="ico" aria-hidden="true" style="--mc:#3E9E6B"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M19.4 12a7.4 7.4 0 0 1-12.8 5" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" opacity=".7"/><path d="M4.6 12a7.4 7.4 0 0 1 12.8-5" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round"/><path d="M18.6 3.4v4.4h-4.4" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.4 20.6v-4.4h4.4" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/></svg></span><span>Adu versiunea nouă<small>Dacă tocmai a apărut o actualizare și încă nu a ajuns la tine</small></span></button>
       <button class="mrow" onclick="shDiag()"><span class="ico" aria-hidden="true" style="--mc:#6B7A85"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M19.6 4.8a5 5 0 0 1-6.6 6.4l-6.6 6.6a2 2 0 1 1-2.8-2.8l6.6-6.6a5 5 0 0 1 6.4-6.6l-3 3 .6 2.4 2.4.6z" fill="#fff"/><circle cx="5" cy="19" r=".9" fill="currentColor"/></svg></span><span>Diagnostic tehnic<small>Starea instalării, util dacă ceva nu merge</small></span></button>
     </div>
-    <p class="muted" style="padding:0 6px">Nivelo v2.11.2 · Jurnal personal. Nu este un dispozitiv medical și nu oferă sfaturi medicale.<br>
-      <span style="font-size:calc(12px*var(--fs))">© 2026 Constantin Enache <span style="white-space:nowrap">· <a href="mailto:hello.nivelo@gmail.com?subject=Nivelo%20v2.11.2%20%E2%80%94%20" style="color:var(--petrol)">hello.nivelo@gmail.com</a></span></span></p>
+    <p class="muted" style="padding:0 6px">Nivelo v2.12.2 · Jurnal personal. Nu este un dispozitiv medical și nu oferă sfaturi medicale.<br>
+      <span style="font-size:calc(12px*var(--fs))">© 2026 Constantin Enache <span style="white-space:nowrap">· <a href="mailto:hello.nivelo@gmail.com?subject=Nivelo%20v2.12.2%20%E2%80%94%20" style="color:var(--petrol)">hello.nivelo@gmail.com</a></span></span></p>
   </section>
 </main>
 
 <nav id="tabs"><i id="tabmark" aria-hidden="true"></i>
-  <button class="on" data-v="today" onclick="go('today')"><span class="ico" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="12" cy="12" r="4.6"/><g opacity=".55"><rect x="11" y="2.2" width="2" height="3.6" rx="1"/><rect x="11" y="18.2" width="2" height="3.6" rx="1"/><rect x="2.2" y="11" width="3.6" height="2" rx="1"/><rect x="18.2" y="11" width="3.6" height="2" rx="1"/><rect x="11" y="2.2" width="2" height="3.6" rx="1" transform="rotate(45 12 12)"/><rect x="11" y="18.2" width="2" height="3.6" rx="1" transform="rotate(45 12 12)"/><rect x="2.2" y="11" width="3.6" height="2" rx="1" transform="rotate(45 12 12)"/><rect x="18.2" y="11" width="3.6" height="2" rx="1" transform="rotate(45 12 12)"/></g></g></svg></span>Azi</button>
+  <button class="on" data-v="today" onclick="go('today')"><span class="ico" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="12" cy="12" r="4.6"/><g opacity=".55"><rect x="11" y="2.2" width="2" height="3.6" rx="1"/><rect x="11" y="18.2" width="2" height="3.6" rx="1"/><rect x="2.2" y="11" width="3.6" height="2" rx="1"/><rect x="18.2" y="11" width="3.6" height="2" rx="1"/><rect x="11" y="2.2" width="2" height="3.6" rx="1" transform="rotate(45 12 12)"/><rect x="11" y="18.2" width="2" height="3.6" rx="1" transform="rotate(45 12 12)"/><rect x="2.2" y="11" width="3.6" height="2" rx="1" transform="rotate(45 12 12)"/><rect x="18.2" y="11" width="3.6" height="2" rx="1" transform="rotate(45 12 12)"/></g></g><g class="lunad" fill="currentColor" opacity="0"><path d="M14.6 4.2a8 8 0 1 0 5.6 13.6A6.6 6.6 0 0 1 14.6 4.2z"/><circle cx="18.6" cy="5.4" r="1.05" opacity=".6"/><circle cx="20.8" cy="9.4" r=".7" opacity=".45"/></g></svg></span>Azi</button>
   <button data-v="hist" onclick="go('hist')"><span class="ico" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24"><path d="M4.6 9.2A8 8 0 1 1 4.3 14" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" opacity=".55"/><path d="M2.6 5.4l1.9 4.3 4.4-1.6" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/><path d="M12 7.6v4.6l3.2 2" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Istoric</button>
   <button data-v="foods" onclick="go('foods')"><span class="ico" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24"><circle cx="8.6" cy="9.2" r="3.7" fill="currentColor" opacity=".6"/><path d="M8.6 5.6c0-1.2.4-2 1.2-2.6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".6"/><circle cx="15.4" cy="9.6" r="3.3" fill="currentColor" opacity=".6"/><path d="M11.4 5.2c1.9-.9 3.9-.3 4.8 1.2-1.9.9-3.9.3-4.8-1.2z" fill="currentColor" opacity=".85"/><path d="M2.4 12h19.2c-.3 4.7-4 8.4-8.8 8.6h-1.6c-4.8-.2-8.5-3.9-8.8-8.6z" fill="currentColor"/></svg></span>Alimente</button>
   <button data-v="stats" onclick="go('stats')"><span class="ico" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24"><g fill="currentColor" opacity=".55"><rect x="3.6" y="13" width="4" height="7.6" rx="1.3"/><rect x="10" y="9.4" width="4" height="11.2" rx="1.3"/><rect x="16.4" y="11.4" width="4" height="9.2" rx="1.3"/></g><path d="M4.4 9.4l5.8-4.6 4 3.1 5.6-4.4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Statistici</button>
@@ -1347,7 +1447,7 @@ var PORNIT = false, ULTIMA_EROARE = null;
 })();
 
 /* ================= STOCARE ================= */
-const APP_VER='v2.11.2';
+const APP_VER='v2.12.2';
 /* Android citește manifestul — numele, iconița, scurtăturile — o singură dată, la
    instalare, și îl păstrează așa până la reinstalare. Codul se actualizează singur,
    configurarea nu. De aceea ținem minte când s-a schimbat ultima dată configurarea:
@@ -1951,7 +2051,12 @@ function cuAsteptare(btn, eticheta, treaba){
     try{ treaba(); } finally { setTimeout(gata, 120); }
   }));
 }
-function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('on'); clearTimeout(t._x); t._x=setTimeout(()=>t.classList.remove('on'),1900); }
+/* v2.12.1: `bifa` = o salvare reușită; mesajul primește în față o bifă care se desenează.
+   Textul rămâne același (bifa e un desen, fără text), deci și cititorul de ecran spune la fel. */
+function toast(m, bifa){ const t=$('toast');
+  if(bifa){ t.innerHTML='<span class="tbifa" aria-hidden="true"><svg viewBox="0 0 20 20" width="18" height="18"><circle cx="10" cy="10" r="9" fill="var(--ok)"/><path d="M5.6 10.4l3 3 5.8-6.2" pathLength="1" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'; t.appendChild(document.createTextNode(m)); }
+  else t.textContent=m;
+  t.classList.add('on'); clearTimeout(t._x); t._x=setTimeout(()=>t.classList.remove('on'),1900); }
 function sortEv(){ DAYMAP=null; MASA_IDX=null; S.events.sort((a,b)=>a.ts-b.ts); }
 /* Intrarea tocmai notată se luminează o clipă în cronologie, ca să se vadă UNDE a
    ajuns. Într-un jurnal ordonat pe oră, o intrare de acum două ore apare la mijlocul
@@ -2140,7 +2245,9 @@ function momentBara(){
        // ca momentele din cronologie, cu o excepție: în cronologie orele dinainte de 05 țin de „Dimineața";
        // pentru culoarea barei, la 3 noaptea e noapte
        const m = h<5 ? 'noapte' : ({'Dimineața':'dim','Prânz':'pranz','Cină':'cina','Seara / noaptea':'noapte'}[daypart(Date.now())]||'pranz');
-       const t=$('topbar'); if(t && t.dataset.m!==m) t.dataset.m=m; }catch(e){}
+       const t=$('topbar'); if(t && t.dataset.m!==m) t.dataset.m=m;
+       // v2.12.2: iconița „Azi" din bara de jos e lună seara și noaptea (aceleași ore ca nuanța barei de sus)
+       const b=document.querySelector('#tabs button[data-v="today"]'); if(b) b.classList.toggle('luna', m==='noapte'); }catch(e){}
 }
 function go(v){
   const ordine=['today','hist','foods','stats','more'];
@@ -2235,7 +2342,7 @@ window.addEventListener('popstate', ()=>{
   if(anySheet()){ try{ history.pushState({nv:1},''); }catch(e){ HIST_ON=false; } }
   else HIST_ON=false;
 });
-function closeSheetUI(){ $('sheet').classList.remove('on'); $('veil').classList.remove('on'); syncLock(); }
+function closeSheetUI(){ const sh=$('sheet'); stringeFoaia(sh); sh.classList.remove('on'); $('veil').classList.remove('on'); syncLock(); }
 function closeSheet2UI(){ $('sheet2').classList.remove('on'); $('veil2').classList.remove('on'); syncLock(); }
 /* Fereastra e derulabilă, iar browserul ține minte cât ai derulat în ea. Dacă deschizi
    una lungă, cobori până la jumătate și o închizi, următoarea fereastră se deschidea
@@ -2305,6 +2412,10 @@ let ATINS={t:0, el:null};
 document.addEventListener('pointerdown', ev=>{
   const b=ev.target && ev.target.closest ? ev.target.closest('#quick button, .ev') : null;
   ATINS={t:performance.now(), el:b};
+  // v2.12.2: desenul de pe butonul de notare reacționează chiar la atingere (doar pe Azi, nu și în copiile lui)
+  if(b && b.parentNode && b.parentNode.id==='quick' && !miscareRedusa()){
+    b.classList.remove('apasat'); void b.offsetWidth; b.classList.add('apasat');
+    clearTimeout(b._apasat); b._apasat=setTimeout(()=>b.classList.remove('apasat'), 700); }
 }, true);
 const TIP_FOAIE={gluc:'i-gluc', meal:'i-meal', ins:'i-ins', note:'i-note'};
 function antetFoaie(tip, titlu){
@@ -2371,6 +2482,26 @@ function pregatesteFoaia(sh, opt){
        if(ai && !sh.dataset.tip){ sh.dataset.info=ai.dataset.info; sh.style.setProperty('--tipc', ai.dataset.cul); } else delete sh.dataset.info; }catch(e){}
   if(!sh.querySelector(':scope > .maner')) sh.insertAdjacentHTML('afterbegin','<div class="maner" aria-hidden="true"></div>');
   legaTragerea(sh, sh.id==='sheet2' ? closeSheet2 : closeSheet);
+  /* v2.12.2: între 00 și 06, ferestrele de notare (și cele deschise peste ele) se deschid în
+     varianta întunecată, chiar dacă tema e luminoasă: la 3 noaptea, un ecran alb orbește. */
+  const noapte = new Date().getHours()<6 && document.documentElement.dataset.theme!=='dark'
+    && (!!sh.dataset.tip || (sh.id==='sheet2' && !!$('sheet').dataset.noapte && $('sheet').classList.contains('on')));
+  if(noapte){ pregatesteNoaptea(); sh.dataset.noapte='1'; } else delete sh.dataset.noapte;
+  const vl=$(sh.id==='sheet2'?'veil2':'veil'); if(vl) vl.classList.toggle('noapte', noapte);
+}
+/* Varianta de noapte refolosește chiar regulile temei întunecate: la prima nevoie, fiecare
+   regulă `html[data-theme="dark"] X` primește o pereche `div[data-noapte] X`, cu aceeași
+   prioritate (un atribut + un element). Așa, orice ajustare viitoare a temei întunecate se
+   aplică singură și aici. */
+let NOAPTE_GATA=false;
+function pregatesteNoaptea(){
+  if(NOAPTE_GATA) return; NOAPTE_GATA=true;
+  try{ const st=document.createElement('style'); st.id='stilnoapte'; let css='';
+    [...document.styleSheets].forEach(f=>{ let reg; try{ reg=f.cssRules; }catch(e){ return; }
+      [...reg].forEach(r=>{ if(!r.selectorText || r.selectorText.indexOf('html[data-theme="dark"]')<0) return;
+        const sel=r.selectorText.split(',').map(x=>x.trim()).filter(x=>x.indexOf('html[data-theme="dark"]')===0).map(x=>'div[data-noapte]'+x.slice('html[data-theme="dark"]'.length));
+        if(sel.length) css+=sel.join(', ')+'{'+r.style.cssText+'}\n'; }); });
+    st.textContent=css; document.head.appendChild(st); }catch(e){}
 }
 /* Fereastra crește din locul atins. Doar pentru ferestrele de notare și doar dacă
    atingerea a fost chiar acum (sub 0,6 s) pe un buton de notare sau pe un card. */
@@ -2389,9 +2520,33 @@ function nasteFoaia(sh){
   ], {duration:340, easing:'cubic-bezier(.2,.85,.25,1)'});
   const gata=()=>{ sh.classList.remove('creste'); setTimeout(()=>sh.classList.remove('nascut'), 120); };
   a.onfinish=gata; a.oncancel=gata;
+  sh._din=el;            // v2.12.2: la închidere, se strânge înapoi aici
   ATINS={t:0, el:null};
   return true;
 }
+/* v2.12.2: fereastra care a crescut dintr-un buton (sau dintr-un card) se strânge înapoi în
+   el la închidere. Starea se schimbă imediat (clasa .on dispare, ca înainte), doar desenul
+   mai durează 0,26 s. Dacă butonul nu mai e în pagină sau nu se vede (de exemplu cardul s-a
+   redesenat după salvare), fereastra coboară ca de obicei. */
+function stringeFoaia(sh){
+  const el=sh._din; sh._din=null;
+  // trasă în jos cu degetul: coboară în continuarea gestului, nu se strânge în buton
+  if(!el || !document.contains(el) || miscareRedusa() || !sh.animate || !sh.classList.contains('on') || sh.classList.contains('trage') || performance.now()-(sh._tras||0)<400) return false;
+  const o=el.getBoundingClientRect(); if(!o.width || o.bottom<0 || o.top>innerHeight) return false;
+  const r=sh.getBoundingClientRect(); if(!r.width) return false;
+  const s=Math.max(.14, Math.min(.5, o.width/r.width));
+  const dx=(o.left+o.width/2)-(r.left+r.width/2), dy=(o.top+o.height/2)-(r.top+r.height/2);
+  sh.classList.add('creste'); sh.style.pointerEvents='none';
+  const a=sh.animate([
+    {transform:'none', opacity:1, borderRadius:'22px 22px 0 0'},
+    {transform:`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) scale(${s.toFixed(3)})`, opacity:0, borderRadius:'26px'}
+  ], {duration:260, easing:'cubic-bezier(.4,0,.7,.2)', fill:'forwards'});
+  sh._inch=a;
+  const gata=()=>{ if(sh._inch!==a) return; sh._inch=null; a.cancel(); sh.style.pointerEvents=''; requestAnimationFrame(()=>sh.classList.remove('creste')); };
+  a.onfinish=gata;
+  return true;
+}
+function oprestestringerea(sh){ const a=sh && sh._inch; if(a){ sh._inch=null; try{ a.cancel(); }catch(e){} sh.style.pointerEvents=''; sh.classList.remove('creste'); } }
 function legaTragerea(sh, inchide){
   if(sh._trag) return; sh._trag=true;
   let y0=null, dy=0, t0=0, pid=null, mutat=false;
@@ -2415,7 +2570,7 @@ function legaTragerea(sh, inchide){
     const v=dy/Math.max(1, performance.now()-t0);
     const inch = mutat && (dy>110 || (dy>40 && v>0.55));
     y0=null; sh.classList.remove('trage'); sh.style.transform='';
-    if(inch){ vibreaza(VIB_GRAFIC); inchide(); }
+    if(inch){ vibreaza(VIB_GRAFIC); sh._tras=performance.now(); inchide(); }
   };
   sh.addEventListener('pointerup', gata); sh.addEventListener('pointercancel', gata);
   // după o tragere, clicul care urmează ridicării degetului nu trebuie să apese ceva
@@ -2452,12 +2607,12 @@ function legaTragerea(sh, inchide){
     t0y=null; tDec=null;
     if(dec!=='trage') return;
     sh.classList.remove('trage'); sh.style.transform='';
-    if(tDy>110 || (tDy>40 && v>0.55)){ vibreaza(VIB_GRAFIC); inchide(); }
+    if(tDy>110 || (tDy>40 && v>0.55)){ vibreaza(VIB_GRAFIC); sh._tras=performance.now(); inchide(); }
     setTimeout(()=>{ mutat=false; }, 350);
   };
   sh.addEventListener('touchend', tGata); sh.addEventListener('touchcancel', tGata);
 }
-function openSheet(html, opt){ const sh=$('sheet'); sh.innerHTML=html; pregatesteFoaia(sh, opt); sh.scrollTop=0; $('veil').classList.add('on'); syncLock(); syncHist(); legaEtichete(sh); preiaFocus(sh);
+function openSheet(html, opt){ const sh=$('sheet'); oprestestringerea(sh); sh._din=null; sh.innerHTML=html; pregatesteFoaia(sh, opt); sh.scrollTop=0; $('veil').classList.add('on'); syncLock(); syncHist(); legaEtichete(sh); preiaFocus(sh);
   if(!nasteFoaia(sh)) requestAnimationFrame(()=>{ sh.classList.add('on'); sh.scrollTop=0; }); }
 function closeSheet(){ closeSheetUI(); syncHist(); redaFocus($('sheet')); }
 function openSheet2(html){ const sh=$('sheet2'); sh.innerHTML=html; pregatesteFoaia(sh); sh.scrollTop=0; $('veil2').classList.add('on'); syncLock(); syncHist(); legaEtichete(sh); preiaFocus(sh); requestAnimationFrame(()=>{ sh.classList.add('on'); sh.scrollTop=0; }); }
@@ -2804,7 +2959,7 @@ function okGluc(id){
   else { nid=uid(); S.events.push({id:nid, ts, type:'gluc', gluc:{v, src:chipVal('gsrc')}}); }
   marcheazaNou(nid);
   const deUnde=($('gv')&&$('gv').getBoundingClientRect)?$('gv').getBoundingClientRect():null;
-  sortEv(); const ok=save(); closeSheet(); renderToday(); toast('Glicemie salvată');
+  sortEv(); const ok=save(); closeSheet(); AZI_ANIM=true; renderToday(); toast('Glicemie salvată', ok!==false);
   if(ok!==false){ vibreaza(VIB_SALVARE); zboaraInCadran(deUnde, v, nid); }
 }
 
@@ -2857,7 +3012,7 @@ function okIns(id){
   if(id){ const e=S.events.find(x=>x.id===id); e.ts=ts; e.ins=rec; }
   else { nid=uid(); S.events.push({id:nid, ts, type:'ins', ins:rec}); }
   marcheazaNou(nid);
-  sortEv(); const ok=save(); closeSheet(); renderToday(); toast('Insulină salvată');
+  sortEv(); const ok=save(); closeSheet(); AZI_ANIM=true; renderToday(); toast('Insulină salvată', ok!==false);
   if(ok!==false) vibreaza(VIB_SALVARE);
 }
 
@@ -2999,7 +3154,7 @@ function okMeal(){
   if(M._edit){ const e=S.events.find(x=>x.id===M._edit); e.ts=ts; e.meal=rec; }
   else { nid=uid(); S.events.push({id:nid, ts, type:'meal', meal:rec}); }
   marcheazaNou(nid);
-  sortEv(); const ok=save(); closeSheet(); renderToday(); toast('Masă salvată');
+  sortEv(); const ok=save(); closeSheet(); AZI_ANIM=true; renderToday(); toast('Masă salvată', ok!==false);
   if(ok!==false) vibreaza(VIB_SALVARE);
 }
 
@@ -3081,18 +3236,42 @@ function okNote(id){
     else e.note=rec.note; }
   else { nid=uid(); S.events.push({id:nid, ts, ...rec}); }
   marcheazaNou(nid);
-  sortEv(); const ok=save(); closeSheet(); renderToday(); toast('Salvat');
+  sortEv(); const ok=save(); closeSheet(); AZI_ANIM=true; renderToday(); toast('Salvat', ok!==false);
   if(ok!==false) vibreaza(VIB_SALVARE);
 }
 
 /* ================= ȘTERGERE / EDITARE ================= */
+/* v2.12.2: după o ștergere, cardurile de dedesubt urcă lin în locul celui plecat, în loc să
+   sară. Se notează unde era fiecare card (și fiecare titlu de moment al zilei) înainte de
+   redesenare, apoi fiecare pornește din locul vechi spre cel nou (0,26 s). Doar desen: lista
+   e deja cea nouă. */
+function pozitiiCronologie(){
+  const m=new Map();
+  ['timeline','histbody'].forEach(id=>{ const c=$(id); if(!c || !c.offsetParent) return; const nr={};
+    c.querySelectorAll('.ev[data-id], .daypart, .mealsum').forEach(el=>{
+      let k; if(el.dataset.id) k='ev:'+el.dataset.id; else { const t=el.className+'|'+el.textContent.trim(); nr[t]=(nr[t]||0)+1; k=t+'#'+nr[t]; }
+      m.set(id+'|'+k, el.getBoundingClientRect().top); }); });
+  return m;
+}
+function alunecaInLoc(poz){
+  if(!poz || !poz.size || miscareRedusa()) return;
+  ['timeline','histbody'].forEach(id=>{ const c=$(id); if(!c || !c.offsetParent) return; const nr={};
+    c.querySelectorAll('.ev[data-id], .daypart, .mealsum').forEach(el=>{
+      let k; if(el.dataset.id) k='ev:'+el.dataset.id; else { const t=el.className+'|'+el.textContent.trim(); nr[t]=(nr[t]||0)+1; k=t+'#'+nr[t]; }
+      const v=poz.get(id+'|'+k); if(v===undefined) return;
+      const d=v-el.getBoundingClientRect().top;
+      if(Math.abs(d)<1 || Math.abs(d)>400 || !el.animate) return;
+      el.animate([{transform:`translateY(${d.toFixed(1)}px)`},{transform:'none'}], {duration:260, easing:'cubic-bezier(.2,.8,.25,1)'}); }); });
+}
 function delEv(id){
   shConfirm('Vei putea anula imediat după, dacă te răzgândești.', ()=>{
     const sterge=()=>{
       const gone=S.events.filter(e=>e.id===id);
       S.events=S.events.filter(e=>e.id!==id); save();
       setUndo({op:'del', items:gone, label:'Intrare ștearsă', undone:'Intrarea a revenit'});
+      const poz=pozitiiCronologie();
       renderToday(); renderHist();
+      alunecaInLoc(poz);
     };
     /* Adăugarea era animată, ștergerea nu: cardul dispărea pur și simplu, iar dacă
        ștergeai din greșeală altceva decât credeai, nu apucai să vezi ce a plecat.
@@ -3208,8 +3387,15 @@ const EMPTY_ICONS={
   'ℹ️':'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#5B8FBF"/> <circle cx="12" cy="7.6" r="1.5" fill="#FFFFFF"/> <path d="M12 10.8v6.4" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/></svg>',
   '📶':'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="14.6" width="3.4" height="5.6" rx="1.1" fill="#9CB0BA"/> <rect x="8.4" y="11" width="3.4" height="9.2" rx="1.1" fill="#9CB0BA"/> <rect x="13.6" y="7.4" width="3.4" height="12.8" rx="1.1" fill="#C9D4DA"/> <rect x="18.8" y="3.8" width="3.4" height="16.4" rx="1.1" fill="#C9D4DA"/></svg>'
 };
+/* v2.12.1: ecranele goale au o mică ilustrație în stilul plăcuțelor: plăcuța pe un cerc
+   de culoarea ei, cu câteva forme mici în jur, care apar o dată, la intrare. */
+function ilustratie(k){
+  const pl=placuta(k,52); if(!pl) return '';
+  const cul=(pl.match(/--mc:([^;]+);/)||[])[1]||'var(--petrol)';
+  return `<span class="ilus" aria-hidden="true" style="--ic:${cul}"><i class="ilf"></i><i class="ild d1"></i><i class="ild d2"></i><i class="ild d3"></i><i class="ild d4"></i><span class="ilp">${pl}</span><i class="ilu"></i></span>`;
+}
 function emptyState(o){
-  const pl=PLACUTA_EMOJI[o.ic] ? placuta(PLACUTA_EMOJI[o.ic],52) : '';
+  const pl=PLACUTA_EMOJI[o.ic] ? ilustratie(PLACUTA_EMOJI[o.ic]) : '';
   return `<div class="card empty"><span class="ei">${pl||EMPTY_ICONS[o.ic]||o.ic}</span><b>${o.t}</b>
     <span class="hint">${o.d}</span>
     ${o.btn?`<button class="act" onclick="${o.btn.go}">${o.btn.t}</button>`:''}</div>`;
@@ -3530,9 +3716,14 @@ function rapAgoHtml(){
               : Math.floor(m/60)+'<small class="u">h</small>'+(m%60?' '+String(m%60).padStart(2,'0'):'');
 }
 function momentulAcum(){ const h=new Date().getHours(); return h<5?'sea':h<11?'dim':h<17?'pr':h<21?'cin':'sea'; }
+function zonaGlicemie(v){ const s=S.settings; return v<s.low?'jos':v<=s.high?'tinta':v<=250?'sus':'fsus'; }
 function actualizeazaVechimea(){
   const card=$('heroCard'); if(card) card.dataset.moment=momentulAcum();
   const e=ULTIMA_GL, hero=$('hero');
+  /* v2.12.1: lumina din spatele cadranului are culoarea intervalului ultimei glicemii și se
+     stinge odată cu arcul, pe măsură ce valoarea se învechește. */
+  if(card){ if(e){ card.dataset.zona=zonaGlicemie(e.gluc.v); card.style.setProperty('--zonv', vechimeOpac(e).toFixed(2)); }
+            else { delete card.dataset.zona; card.style.removeProperty('--zonv'); } }
   if(e && hero){
     const a=hero.querySelector('.arc'); if(a) a.style.opacity=vechimeOpac(e).toFixed(2);
     const ag=hero.querySelector('.ago');
@@ -3609,7 +3800,7 @@ function renderToday(){
   const glucs=S.events.filter(e=>e.type==='gluc');
   const last=glucs[glucs.length-1];
   let hero;
-  if(!last){ hero='<div class="empty" style="flex:1; padding:18px 8px"><span class="ei">◉</span><b>Încă nicio glicemie</b><span class="hint">Aici vei vedea ultima valoare, cât de demult a fost și în ce direcție merge.</span></div>'; }
+  if(!last){ hero='<div class="empty" style="flex:1; padding:18px 8px"><span class="ei">'+(ilustratie('i-gluc')||'◉')+'</span><b>Încă nicio glicemie</b><span class="hint">Aici vei vedea ultima valoare, cât de demult a fost și în ce direcție merge.</span></div>'; }
   else{
     const col=rangeColor(last.gluc.v);
     const ago = vechimeText(last);
@@ -3698,6 +3889,7 @@ function renderToday(){
   const v3=hc?fmtHC(hc):'—';
   const v4=bol?fmtN(bol):'—';
   const v5=baz?fmtN(baz):'—';
+  const AZ_VECHI = AZI_ANIM ? [...$('mini3').querySelectorAll('b')].map(b=>b.textContent.trim()) : null; AZI_ANIM=false;
   $('mini3').innerHTML=`
     <div><b class="${cls(v1)}">${v1}</b><span>medie azi</span></div>
     <div><b class="${cls(v2)}">${v2}</b><span>în țintă azi</span></div>
@@ -3705,6 +3897,7 @@ function renderToday(){
     <div><b class="${cls(v4)}">${v4}</b><span>rapidă U</span></div>
     <div><b class="${cls(v5)}">${v5}</b><span>bazală U</span></div>
     <div><b class="${cls(rapAgo)}" id="rapago">${rapAgo}</b><span>ultima rapidă</span></div>`;
+  if(AZ_VECHI) aziAnimeaza(AZ_VECHI);
   renderSpark(evs);
   try{ $('noapte').innerHTML=noapteaHtml(); }catch(e){ $('noapte').innerHTML=''; }
   renderTimeline($('timeline'), evs);
@@ -3858,6 +4051,18 @@ function renderSpark(evs){
   const yLab=[s.low,s.high].map(v=>`<text x="${LP-4}" y="${(Y(v)+3).toFixed(1)}" font-size="8.5" fill="var(--ink-soft)" text-anchor="end">${v}</text>`
     +`<line x1="${LP}" y1="${Y(v).toFixed(1)}" x2="${W-P}" y2="${Y(v).toFixed(1)}" stroke="var(--petrol)" stroke-opacity=".28" stroke-width="1"/>`).join('');
   const line=pts.map((p,i)=>(i?'L':'M')+X(p.x).toFixed(1)+' '+Y(p.v).toFixed(1)).join(' ');
+  /* v2.12.1: sub linie, o umbră colorată după intervalul valorilor (aceleași culori ca
+     punctele), care se stinge spre baza graficului.
+     Ultimul punct pulsează de trei ori după ce s-a desenat linia, apoi se oprește. */
+  const yb=(H-BP).toFixed(1), x0=X(pts[0].x), x1=X(pts[pts.length-1].x), lat=Math.max(1,x1-x0);
+  // culoarea urmează valoarea liniei, de la stânga la dreapta (fiecare punct își dă culoarea în dreptul lui)
+  const opr=pts.map(p=>`<stop offset="${((X(p.x)-x0)/lat*100).toFixed(1)}%" stop-color="${rangeColor(p.v)}"/>`).join('');
+  const umbra=`<defs><linearGradient id="sparkUmbra" gradientUnits="userSpaceOnUse" x1="${x0.toFixed(1)}" y1="0" x2="${x1.toFixed(1)}" y2="0">${opr}</linearGradient>
+    <linearGradient id="sparkStinge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset="1" stop-color="#fff" stop-opacity=".1"/></linearGradient>
+    <mask id="sparkMasca"><rect x="0" y="0" width="${W}" height="${H}" fill="url(#sparkStinge)"/></mask></defs>`;
+  const arie=`<path class="sparkarie" d="${line} L${X(pts[pts.length-1].x).toFixed(1)} ${yb} L${X(pts[0].x).toFixed(1)} ${yb} Z" fill="url(#sparkUmbra)" mask="url(#sparkMasca)"/>`;
+  const ult=pts[pts.length-1];
+  const puls=`<circle class="sparkpuls" cx="${X(ult.x).toFixed(1)}" cy="${Y(ult.v).toFixed(1)}" r="4" fill="none" stroke="${rangeColor(ult.v)}" stroke-width="2"/>`;
   /* `--i` dă fiecărui punct rândul lui: apar unul câte unul, în urma liniei care se
      trasează, nu toate odată la final. Întârzierea e proporțională cu poziția, deci
      merge la fel de bine cu trei puncte și cu treizeci. */
@@ -3874,8 +4079,8 @@ function renderSpark(evs){
   $('spark').innerHTML=`<div id="sparkw" class="sparkw" role="img" tabindex="0" aria-label="${esc('Graficul zilei. '+rez+' Cu săgețile stânga și dreapta treci prin măsurători.')}">
     <div class="sparktip" aria-live="polite"></div>
     <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-    ${band}${yLab}<line class="sparkcur" x1="0" y1="${P}" x2="0" y2="${H-BP}" stroke="var(--ink-soft)" stroke-width="1" stroke-dasharray="2 2.5"/>
-    <path class="sparkline" pathLength="1" d="${line}" fill="none" stroke="var(--ink-soft)" stroke-width="1.8" opacity=".6"/>${dots}
+    ${umbra}${band}${arie}${yLab}<line class="sparkcur" x1="0" y1="${P}" x2="0" y2="${H-BP}" stroke="var(--ink-soft)" stroke-width="1" stroke-dasharray="2 2.5"/>
+    <path class="sparkline" pathLength="1" d="${line}" fill="none" stroke="var(--ink-soft)" stroke-width="1.8" opacity=".6"/>${puls}${dots}
     <circle class="sparkhl" cx="0" cy="0" r="6.5" fill="var(--ok)" stroke="var(--card)" stroke-width="2.4"/>${ticks}</svg></div>
     <details class="sparksum"><summary>Graficul în cuvinte</summary>${rezL.map(t=>`<p>${esc(t)}</p>`).join('')}</details>`;
   try{ sparkLeaga(); }catch(e){}
@@ -4108,7 +4313,7 @@ function okFood(id, fromMeal){
   let f;
   if(id){ f=S.foods.find(x=>x.id===id); Object.assign(f,rec); }
   else{ f={id:uid(), uses:0, ...rec}; S.foods.push(f); }
-  save(); toast('Aliment salvat');
+  save(); toast('Aliment salvat', true);
   if(fromMeal){ shMealResume(f); } else { closeSheet(); renderFoods(); }
 }
 function shMealResume(f){
@@ -4327,7 +4532,7 @@ function okReteta(){
   if(save()===false) return;   // salvarea eșuată își arată singură avertismentul
   R=null;
   closeSheet(); renderFoods();
-  toast('Rețetă salvată: '+fmtHC(c.val)+' HC '+(c.mode==='per100'?'la 100 g':'pe porție'));
+  toast('Rețetă salvată: '+fmtHC(c.val)+' HC '+(c.mode==='per100'?'la 100 g':'pe porție'), true);
 }
 
 /* ── Trimiterea unei rețete pe telefonul celuilalt ──────────────────────────────
@@ -4800,6 +5005,63 @@ function agpBenzi(g){
   if(cur.length) runs.push(cur);
   return {band, runs, pts};
 }
+/* v2.12: la 7 zile, fiecare glicemie pe ora ei. Ziua tipică (percentile) cere cel puțin
+   8 măsurători în jurul fiecărei ore; cu ~6 pe zi, într-o săptămână rămâneau desenate doar
+   câteva puncte din 49, iar graficul părea stricat. Aici nu se calculează nimic: se arată
+   exact ce ai notat. Zilele se leagă cu o linie subțire, care se rupe peste goluri mai lungi
+   de 4 ore, ca să nu inventeze ce s-a întâmplat între măsurători (aceeași regulă ca la ziua
+   tipică: gol e mai onest decât greșit). */
+/* v2.12: „Când măsori". Media, HbA1c estimat și procentele descriu momentele în care ai
+   măsurat. Dacă o parte a zilei aproape lipsește (de obicei noaptea), cifrele nu o prind,
+   iar asta se spune aici. Intervalele au orele scrise, ca să nu fie confundate cu momentele
+   (Dimineața, Prânz…) din cronologie, care au alte limite. Procentele se repartizează ca la
+   timpul în țintă (însumează 100). */
+const CAND_INTERVALE=[[0,6],[6,11],[11,17],[17,21],[21,24]];
+function candMasoriHtml(g){
+  if(g.length<10) return '';
+  const n=CAND_INTERVALE.map(([a,b])=>g.filter(x=>{ const h=new Date(x.ts).getHours(); return h>=a && h<b; }).length);
+  const pc=bandPct(n), mx=Math.max(...n,1);
+  const col=CAND_INTERVALE.map(([a,b],i)=>`<div class="cmcol"><div class="cmbar"><i style="height:${Math.max(n[i]?4:0, Math.round(n[i]/mx*100))}%"></i></div><b class="num">${n[i]&&!pc[i]?'&lt;1':pc[i]}%</b><span>${two(a)}–${two(b)}</span></div>`).join('');
+  const putine=CAND_INTERVALE.map(([a,b],i)=>({a,b,n:n[i],p:pc[i]})).filter(x=>x.n/g.length<0.05);
+  const avert = !putine.length ? '' : `<p class="muted" style="margin:8px 0 0">${putine.map(x=>`Între ${two(x.a)} și ${two(x.b)} ai ${x.n?'doar '+x.n:'nicio măsurătoare'} din ${g.length}${x.n?` (${x.p?x.p+'%':'sub 1%'})`:''}`).join('; ')}. Ce se întâmplă atunci se vede puțin în cifrele de mai jos: media, HbA1c estimat și procentele descriu mai ales orele în care măsori.</p>`;
+  return `<div class="cmas"><b>Când măsori</b><div class="cmgrid" role="img" aria-label="${esc('Câte măsurători ai pe fiecare interval de ore: '+CAND_INTERVALE.map(([a,b],i)=>two(a)+'–'+two(b)+' '+pc[i]+'%').join(', '))}">${col}</div>${avert}</div>`;
+}
+function masuratoriHtml(g){
+  if(!g.length) return '';
+  const s=S.settings;
+  const W=340, H=150, ML=26, MR=6, TOP=8, BOT=18, iw=W-ML-MR, ih=H-TOP-BOT;
+  const vmax=Math.max(...g.map(x=>x.v));
+  const yMax=Math.min(400, Math.max(250, Math.ceil(vmax/50)*50)), yMin=40;
+  const ora=ts=>{ const d=new Date(ts); return d.getHours()+d.getMinutes()/60; };
+  const X=h=>ML+h/24*iw;
+  const Y=v=>TOP+(yMax-Math.max(yMin,Math.min(yMax,v)))/(yMax-yMin)*ih;
+  const ord=[...g].sort((a,b)=>a.ts-b.ts);
+  const zile={}; ord.forEach(x=>{ (zile[dKey(x.ts)]=zile[dKey(x.ts)]||[]).push(x); });
+  const linii=Object.values(zile).map(z=>{ let d='', prev=null;
+    z.forEach(x=>{ const pt=X(ora(x.ts)).toFixed(1)+' '+Y(x.v).toFixed(1);
+      d += (!prev || x.ts-prev.ts>4*3600000) ? ' M'+pt : ' L'+pt; prev=x; });
+    return d; }).join('');
+  const puncte=ord.map(x=>`<circle cx="${X(ora(x.ts)).toFixed(1)}" cy="${Y(x.v).toFixed(1)}" r="2.6" fill="${rangeColor(x.v)}" stroke="var(--card)" stroke-width="1"/>`).join('');
+  const ticks=[0,6,12,18,24].map(h=>`<text x="${X(h).toFixed(1)}" y="${H-4}" font-size="9" fill="var(--ink-soft)" text-anchor="middle">${two(h)}</text>`).join('');
+  const yl=[s.low,s.high,250].filter(v=>v<yMax).map(v=>`<text x="${ML-4}" y="${(Y(v)+3).toFixed(1)}" font-size="9" fill="var(--ink-soft)" text-anchor="end">${v}</text>`
+    +`<line x1="${ML}" y1="${Y(v).toFixed(1)}" x2="${W-MR}" y2="${Y(v).toFixed(1)}" stroke="var(--line)" stroke-width="1"${v===250?' stroke-dasharray="3 3"':''}/>`).join('');
+  const mic=ord.reduce((a,b)=>b.v<a.v?b:a), mare=ord.reduce((a,b)=>b.v>a.v?b:a);
+  const cand=x=>ZILE[new Date(x.ts).getDay()].toLowerCase()+', '+tHM(x.ts);
+  const rez=`${nUnit(ord.length,'măsurători','o măsurătoare')}. Cea mai mică: ${mic.v} mg/dl (${cand(mic)}). Cea mai mare: ${mare.v} mg/dl (${cand(mare)}).`;
+  const svg=`<svg class="agpsvg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <rect x="${ML}" y="${Y(s.high).toFixed(1)}" width="${iw}" height="${Math.max(2,Y(s.low)-Y(s.high)).toFixed(1)}" fill="var(--ok)" opacity=".12" rx="3"/>
+    ${yl}
+    <g class="agpdes">
+      <path d="${linii}" fill="none" stroke="var(--petrol)" stroke-width="1.2" stroke-linejoin="round" opacity=".28"/>
+      ${puncte}
+    </g>${ticks}</svg>`;
+  return `<div class="card agpcard mascard"><h2>Glicemiile tale · ${nUnit(PERIOD,'zile','o zi')}</h2>
+    <div role="img" aria-label="${esc('Glicemiile tale pe ultimele '+nUnit(PERIOD,'zile','o zi')+', fiecare pe ora ei. '+rez)}">${svg}</div>
+    <div class="agpleg" aria-hidden="true"><span><i class="pt" style="background:var(--low)"></i>sub țintă</span><span><i class="pt" style="background:var(--ok)"></i>în țintă</span><span><i class="pt" style="background:var(--high)"></i>peste țintă</span><span><i class="pt" style="background:var(--vhigh)"></i>peste 250</span></div>
+    <p style="margin:8px 0 0">${rez}</p>
+    <details class="expl"><summary>Ce înseamnă?</summary><p class="muted" style="margin:6px 0 0">Fiecare punct e o glicemie notată, așezată pe ora la care ai măsurat-o; punctele din aceeași zi sunt legate cu o linie subțire, întreruptă unde trec peste 4 ore între măsurători. Pentru o săptămână sunt prea puține măsurători ca să se poată spune care e valoarea tipică la fiecare oră, așa că vezi chiar măsurătorile. <b>Ziua ta tipică</b> apare la 30 și la 90 de zile.</p></details>
+  </div>`;
+}
 function ziuaTipicaHtml(g){
   const s=S.settings;
   const {band, runs}=agpBenzi(g);
@@ -4821,7 +5083,10 @@ function ziuaTipicaHtml(g){
   const yl=[s.low,s.high,250].filter(v=>v<yMax).map(v=>`<text x="${ML-4}" y="${(Y(v)+3).toFixed(1)}" font-size="9" fill="var(--ink-soft)" text-anchor="end">${v}</text>`
     +`<line x1="${ML}" y1="${Y(v).toFixed(1)}" x2="${W-MR}" y2="${Y(v).toFixed(1)}" stroke="var(--line)" stroke-width="1"${v===250?' stroke-dasharray="3 3"':''}/>`).join('');
   // rezumatul în cuvinte: mediana tipică pe fiecare moment al zilei
-  const pe=[['dimineața',5,11],['la prânz',11,17],['seara',17,21],['noaptea',21,29]].map(([n,a,b])=>{
+  /* v2.12: numele urmează momentele din restul aplicației (Cină = 17–21, Seara / noaptea = după 21).
+     Înainte, 17–21 se numea „seara" și 21–05 „noaptea": „cel mai sus noaptea" se putea citi ca
+     00–06, unde de obicei se măsoară foarte rar. */
+  const pe=[['dimineața',5,11],['la prânz',11,17],['la cină',17,21],['seara și noaptea',21,29]].map(([n,a,b])=>{
     const bs=solid.filter(x=>{ const h=x.h<5?x.h+24:x.h; return h>=a && h<b; });
     return bs.length ? {n, md:Math.round(median(bs.map(x=>x.md)))} : null; }).filter(Boolean);
   let rez='';
@@ -4863,6 +5128,23 @@ function ziuaTipicaHtml(g){
    final exact același text. Pornește DOAR din butoanele de perioadă (`NR_ANIM`), deci orice
    altă randare (pornire, salvare, teste) are cifrele finale imediat. */
 var NR_ANIM=false; let NR_TOKEN=0;
+/* v2.12.2: aceeași rostogolire pentru cifrele de pe Azi, după o notare nouă. Se pornește doar
+   din salvări (`AZI_ANIM`); la final rămâne exact textul randat. „Ultima rapidă" (ore și
+   minute) nu se animă. */
+var AZI_ANIM=false; let AZI_TOKEN=0;
+function aziAnimeaza(vechi){
+  if(miscareRedusa() || typeof requestAnimationFrame!=='function') return;
+  const bs=[...$('mini3').querySelectorAll('b')].slice(0,5), tok=++AZI_TOKEN, lista=[];
+  bs.forEach((b,i)=>{ const n=[...b.childNodes].find(x=>x.nodeType===3); if(!n) return; const fin=n.nodeValue, a=nrCiteste(vechi[i]||''), z=nrCiteste(fin);
+    if(a && z && a.v!==z.v && a.pr===z.pr) lista.push({n, a, z, fin}); });
+  if(!lista.length) return;
+  const t0=performance.now(), D=450;
+  lista.forEach(o=>{ o.n.nodeValue=o.a.v.toFixed(o.z.zec).replace('.',',')+o.z.pr; });
+  const pas=now=>{ if(tok!==AZI_TOKEN) return; const x=Math.min(1,(now-t0)/D), e=1-Math.pow(1-x,3);
+    lista.forEach(o=>{ if(!o.n.isConnected) return; o.n.nodeValue = x>=1 ? o.fin : (o.a.v+(o.z.v-o.a.v)*e).toFixed(o.z.zec).replace('.',',')+o.z.pr; });
+    if(x<1) requestAnimationFrame(pas); };
+  requestAnimationFrame(pas);
+}
 function nrCheie(b){ const st=b.closest('.stat'); if(st){ const sp=st.querySelector('span'); return 'stat:'+(sp?sp.textContent:''); }
   if(b.closest('.tirkpi')) return 'kpi'; const lg=b.closest('.tirlegend > div'); if(lg) return 'leg:'+lg.textContent.replace(/[\d,<%&lt;\s]+$/,'').replace(/\s+/g,' ').trim(); return null; }
 function nrCiteste(t){ const m=String(t).trim().match(/^(-?\d+(?:,\d+)?)(%?)$/); if(!m) return null; return {v:parseFloat(m[1].replace(',','.')), zec:(m[1].split(',')[1]||'').length, pr:m[2]}; }
@@ -5031,7 +5313,7 @@ function renderStats(){
     }
   }
   $('statsbody').innerHTML=`
-    ${ziuaTipicaHtml(g)}
+    ${PERIOD<=7 ? masuratoriHtml(g) : ziuaTipicaHtml(g)}
     <div class="card"><h2>Glicemie · ultimele ${nUnit(PERIOD,'zile','o zi')}</h2>
       <div class="statgrid">
         <div class="stat"><b class="num">${Math.round(avg)}<small class="u">mg/dl</small></b><span>medie</span></div>
@@ -5053,6 +5335,7 @@ function renderStats(){
         : soliditate==='medii' ? 'Datele acoperă o bună parte din perioadă, dar nu tot. Procentele descriu fidel momentele în care ai măsurat, care pot să nu fie repartizate uniform în zi.'
         : 'Datele sunt rare sau acoperă o parte mică din perioadă. Cifrele rămân corecte pentru ce ai notat, dar pot fi influențate mult de câteva zile.'
       }</p>
+      ${candMasoriHtml(g)}
     </div>
     ${labCardHtml()}
     <div class="card"><h2>Timp în țintă (${s.low}–${s.high})</h2>
@@ -6818,7 +7101,8 @@ async function shDiag(){
     : '<p class="muted" style="margin:12px 0 0">Rândurile marcate cu roșu sunt motivul pentru care instalarea nu e oferită.</p>';
   const el=$('diagbody');
   if(el) el.innerHTML=diagVedere(R)+verdict
-    +'<button class="btn btn-g" style="margin-top:12px" onclick="copyDiag()">Copiază raportul</button>'
+    +'<button class="btn btn-p" style="margin-top:12px" onclick="shVerificaCifrele()">Verifică cifrele din Statistici</button>'
+    +'<button class="btn btn-g" style="margin-top:8px" onclick="copyDiag()">Copiază raportul</button>'
     +'<button class="btn btn-g" style="margin-top:8px" onclick="shUpdate()">Adu versiunea nouă</button>'
     +'<button class="btn btn-g" style="margin-top:8px" onclick="shReinstall()">Scurtăturile sau iconița nu s-au schimbat?</button>';
   DIAG_TEXT = R.map(r=>r[0]+': '+r[1]).join('\n');
@@ -6942,9 +7226,10 @@ function shGuide(){
 
     <div class="card ghid" style="--gc:#3E9E6B"><h2>${ghidIco('stats')}<span>4 · Statistici</span></h2>
       <p style="margin:8px 0 0">Imaginea de ansamblu.</p>
-      <p style="margin:8px 0 0">Sus stă <b>Ziua ta tipică</b>: toate zilele din perioadă puse una peste alta, pe ore, ca să vezi dintr-o privire în ce parte a zilei ești de obicei sus sau jos. Explicațiile lungi de sub cifre sunt strânse sub „Ce înseamnă?".</p>
+      <p style="margin:8px 0 0">Sus stă <b>Ziua ta tipică</b>: toate zilele din perioadă puse una peste alta, pe ore, ca să vezi dintr-o privire în ce parte a zilei ești de obicei sus sau jos. La 7 zile, în locul ei vezi fiecare glicemie pe ora ei: o săptămână are prea puține măsurători pentru o zi tipică. Explicațiile lungi de sub cifre sunt strânse sub „Ce înseamnă?".</p>
       <p style="margin:8px 0 0">Alegi perioada sus (7, 30 sau 90 de zile) și vezi: media glicemică, HbA1c estimat, variabilitatea (cât de mult oscilează glicemia în jurul mediei), timpul în țintă, mediile pe momentele zilei, dozele tipice de insulină. Pentru discuția cu medicul, mai jos apar ICR și ISF observate. Perioada are mereu toate zilele alese: dimineața, până la prima glicemie, înseamnă zilele încheiate, până ieri.</p><p style="margin:8px 0 0">Bara timpului în țintă arată separat hipoglicemiile ușoare de cele sub <b>54</b>, iar sub ea, cardul <b>Hipoglicemii</b> îți spune câte episoade ai avut, câte noaptea și care a fost cea mai mică valoare.</p>
       <p style="margin:8px 0 0">Dacă îți notezi analizele <b>HbA1c</b> de la laborator, le vezi tot aici, fiecare alături de estimarea din jurnal pentru cele 90 de zile dinaintea ei.</p>
+      <p style="margin:8px 0 0">La <b>Cât de solide sunt cifrele</b>, „Când măsori" arată cum îți sunt împărțite măsurătorile pe ore. Iar dacă vrei să verifici că cifrele sunt calculate corect: <b>Mai mult → Diagnostic tehnic → Verifică cifrele din Statistici</b>.</p>
       <p style="margin:8px 0 0">Dacă notezi și ciclul menstrual, tot aici apare o comparație între zilele de ciclu și restul: media glicemică, timpul în țintă și insulina rapidă pe zi.</p><p style="margin:8px 0 0">Toate sunt rezumate descriptive din datele tale, orientative, nu recomandări.</p>
     </div>
 
@@ -7085,6 +7370,10 @@ function shHelp(){
       '<p>Ca să se vadă cât de veche e valoarea. Inelul e plin cât timp măsurătoarea are sub o jumătate de oră și se stinge treptat până la 4 ore. Cifra rămâne la fel de clară; sub ea scrie ora și de cât timp e, de exemplu „20:48, acum 1 h 40 min".</p>')}
 
     <div class="qagroup">Cifre și raportul pentru medic</div>
+    ${qa('Cum verific că cifrele din Statistici sunt calculate corect?',
+      '<p><b>Mai mult → Diagnostic tehnic → Verifică cifrele din Statistici</b>. O a doua metodă de calcul, scrisă separat de cea a ecranului, reface din jurnalul de pe telefon toate cifrele din Statistici pe 7, 30 și 90 de zile, plus comparația cu laboratorul, și le compară cu ce scrie pe ecran. Durează o clipă și nu schimbă nimic în jurnal.</p>'+
+      '<p>Dacă iese ceva diferit, apare lista exactă: ce scrie pe ecran și ce a dat recalculul. Trimite-mi o captură.</p>'+
+      '<p>„Calculat corect" nu înseamnă și „complet": cifrele descriu momentele în care ai măsurat. Cât de bine acoperi ziua vezi la <b>Cât de solide sunt cifrele → Când măsori</b>.</p>')}
     ${qa('Cum scot raportul pentru doctor?',
       '<p><b>Mai mult → Raport pentru doctor</b>. Alegi perioada, iar raportul se deschide în fereastra de tipărire a telefonului, de unde îl poți <b>salva ca PDF</b> și trimite sau printa.</p>'+
       '<p>Prima pagină e un rezumat: cifrele mari, bara timpului în țintă, ultima analiză HbA1c și ziua tipică. Pe pagina a doua e o legendă care explică fiecare cifră, ca medicul să-l poată citi fără tine lângă el.</p>')}
@@ -7399,6 +7688,27 @@ function applyUpdate(){
    cu care omul a folosit ultima dată aplicația. La prima instalare nu se arată
    nimic: cine tocmai a intrat n-are ce compara. */
 const NOUTATI=[
+  {v:'v2.12.2', ce:[
+    'Seara și noaptea, iconița „Azi" din bara de jos devine lună.',
+    'Desenele de pe butoanele de notare răspund la atingere: picătura cade, felia din farfurie se rotește și iese aburul, pistonul seringii împinge, cartea se deschide.',
+    'Ferestrele de notare, care cresc din butonul apăsat, se strâng înapoi în el la închidere.',
+    'La ștergerea unei intrări, cele de dedesubt urcă lin în locul ei, în loc să sară.',
+    'Pe Azi, cifrele de sus (medie, în țintă, HC, insulină) se rostogolesc la valoarea nouă după fiecare notare.',
+    'Între 00 și 06, ferestrele de notare se deschid întunecate, chiar dacă tema e luminoasă, ca să nu te orbească noaptea.'
+  ]},
+  {v:'v2.12.1', ce:[
+    'Cardul de sus de pe Azi are în spatele cadranului o lumină în culoarea ultimei glicemii (în țintă, jos, sus), care se stinge pe măsură ce valoarea se învechește.',
+    'Graficul zilei are sub linie o umbră colorată după valori, iar ultima glicemie pulsează scurt după ce se desenează linia.',
+    'La salvare, mesajul de jos („Glicemie salvată"…) are în față o bifă care se desenează.',
+    'Iconițele din bara de jos fac o mișcare scurtă când alegi secțiunea: soarele se rotește, acul ceasului se învârte, bolul se înclină, barele cresc, pătratele apar pe rând.',
+    'Ecranele goale (căutare fără rezultat, bibliotecă goală, telefon nou) au o mică ilustrație în locul plăcuței simple.'
+  ]},
+  {v:'v2.12', ce:[
+    'Mai mult → Diagnostic tehnic → „Verifică cifrele din Statistici": o a doua metodă de calcul, scrisă separat, reface din jurnalul tău toate cifrele din Statistici pe 7, 30 și 90 de zile, plus comparația cu laboratorul, și îți spune dacă se potrivesc cu ce vezi pe ecran.',
+    'În Statistici, la „Cât de solide sunt cifrele", apare „Când măsori": cum îți sunt împărțite măsurătorile pe ore. Dacă un interval aproape lipsește (de obicei noaptea), ți se spune, fiindcă media și HbA1c estimat nu-l prind.',
+    'La 7 zile, în locul zilei tipice (care cere mai multe măsurători decât are o săptămână) vezi fiecare glicemie pe ora ei, colorată după interval.',
+    'Ziua tipică numește momentele la fel ca restul aplicației: „la cină" (17–21) și „seara și noaptea" (după 21), în loc de „seara" și „noaptea".'
+  ]},
   {v:'v2.11.2', ce:[
     'Bara de jos stă pe loc la trecerea între ecrane: nu mai coboară și nu-și mai taie etichetele cât alunecă ecranul nou.'
   ]},
@@ -7944,5 +8254,185 @@ adunaJurnalul().then(porneste);
 
 </script>
 
+<script>
+/* ================= VERIFICAREA CIFRELOR (v2.12) =================
+   A doua metodă de calcul, scrisă separat de cea a ecranului de Statistici, după
+   aceleași reguli (cele din DOCUMENTATIE.md). Nu cheamă nicio funcție de calcul a
+   aplicației: are propriile medii, mediane, percentile, ferestre de zile și
+   repartizări. Citește doar jurnalul (S) și ce scrie pe ecran, apoi compară.
+
+   De ce în aplicație și nu doar în teste: testele verifică pe jurnalele de test,
+   la fiecare versiune. Asta verifică pe jurnalul tău, pe telefonul tău, oricând.
+   Nu modifică nimic din jurnal și nu trimite nimic nicăieri. */
+const VC={
+  ZI:86400000,
+  doi:n=>String(n).padStart(2,'0'),
+  cheie(ts){ const d=new Date(ts); return d.getFullYear()+'-'+VC.doi(d.getMonth()+1)+'-'+VC.doi(d.getDate()); },
+  // miezul nopții de acum `n` zile calendaristice (corect și peste schimbarea orei)
+  miez(ts, n){ const d=new Date(ts); d.setHours(0,0,0,0); d.setDate(d.getDate()-n); d.setHours(0,0,0,0); return d.getTime(); },
+  rot(x){ return Math.floor(x+0.5); },                           // la fel ca Math.round, pentru numere pozitive
+  unu(x){ const y=Math.round(x*10)/10; return String(y).replace('.',','); },
+  mediana(a){ if(!a.length) return 0; const b=a.slice().sort((x,y)=>x-y), k=b.length>>1; return b.length%2?b[k]:(b[k-1]+b[k])/2; },
+  medPoz(a){ const v=a.filter(x=>x>0); return v.length? String(Math.round(VC.mediana(v))) : '—'; },
+  procent(a,p){ const b=a.slice().sort((x,y)=>x-y), i=(b.length-1)*p, j=Math.floor(i), k=Math.ceil(i); return j===k?b[j]:b[j]+(b[k]-b[j])*(i-j); },
+  // procente care însumează 100: în jos peste tot, restul la cele mai mari zecimale
+  repartizare(nr){ const t=nr.reduce((a,b)=>a+b,0); if(!t) return nr.map(()=>0);
+    const ex=nr.map(n=>n*100/t), r=ex.map(Math.floor); let rest=100-r.reduce((a,b)=>a+b,0);
+    ex.map((x,i)=>[x-Math.floor(x),i]).sort((a,b)=>b[0]-a[0]).forEach(([,i])=>{ if(rest>0){ r[i]++; rest--; } }); return r; },
+  moment(ts){ const h=new Date(ts).getHours(); return h<11?0:h<17?1:h<21?2:3; },   // Dimineața, Prânz, Cină, Seara / noaptea
+
+  /* ---- ce ar trebui să scrie pe ecran, recalculat ---- */
+  asteptat(P, acum){
+    const s=S.settings, E=S.events.slice().sort((a,b)=>a.ts-b.ts), azi0=VC.miez(acum,0);
+    const cuAzi=E.some(e=>e.type==='gluc' && e.ts>=azi0);
+    const de=cuAzi?VC.miez(acum,P-1):VC.miez(acum,P), pana=cuAzi?Infinity:azi0;
+    const fer=E.filter(e=>e.ts>=de && e.ts<pana), gl=fer.filter(e=>e.type==='gluc'), v=gl.map(e=>e.gluc.v);
+    const o={};
+    if(!v.length) return {gol:true};
+    let sum=0; v.forEach(x=>sum+=x); const m=sum/v.length;
+    let sq=0; v.forEach(x=>sq+=(x-m)*(x-m)); const sd=Math.sqrt(sq/(v.length-1));
+    const zileGl=new Set(gl.map(e=>VC.cheie(e.ts))).size, zileTot=new Set(fer.map(e=>VC.cheie(e.ts))).size||1;
+    o['medie']=String(VC.rot(m)); o['HbA1c estimat']=VC.unu((m+46.7)/28.7); o['măsurători']=String(v.length);
+    o['pe zi cu date']=VC.unu(v.length/zileTot); o['variabilitate (CV)']=VC.unu(sd/m*100); o['deviație standard']=String(VC.rot(sd));
+    o['zile cu glicemii']=zileGl+' din '+P; o['măsurători pe zi (toată perioada)']=VC.unu(v.length/P);
+    // benzile
+    const jos=s.low, sus=s.high, imparteJos=jos>54, imparteSus=sus<250;
+    const nr=[imparteJos?v.filter(x=>x<54).length:0, 0, v.filter(x=>x>=jos&&x<=sus).length, 0, imparteSus?v.filter(x=>x>250).length:0];
+    nr[1]=v.filter(x=>x<jos).length-nr[0]; nr[3]=v.filter(x=>x>sus).length-nr[4];
+    const pc=VC.repartizare(nr), txt=(n,p)=>(p===0&&n>0)?'<1%':p+'%';
+    o['timp în țintă']=txt(nr[2],pc[2]);
+    if(imparteJos){ o['bandă sub 54']=txt(nr[0],pc[0]); o['bandă 54–'+(jos-1)]=txt(nr[1],pc[1]); } else o['bandă sub țintă']=txt(nr[0]+nr[1],pc[0]+pc[1]);
+    o['bandă în țintă']=txt(nr[2],pc[2]);
+    if(imparteSus){ o['bandă '+(sus+1)+'–250']=txt(nr[3],pc[3]); o['bandă peste 250']=txt(nr[4],pc[4]); } else o['bandă peste țintă']=txt(nr[3]+nr[4],pc[3]+pc[4]);
+    // episoadele de hipoglicemie: valori sub ținta de jos, la cel mult o oră una de alta = un episod
+    const ep=[]; gl.forEach(e=>{ const x=e.gluc.v; if(x>=jos) return; const u=ep[ep.length-1];
+      if(u && e.ts-u.sf<=3600000){ u.sf=e.ts; u.min=Math.min(u.min,x); } else ep.push({st:e.ts, sf:e.ts, min:x}); });
+    o['episoade sub '+jos]=String(ep.length);
+    if(imparteJos) o['din care sub 54']=String(ep.filter(x=>x.min<54).length);
+    o['noaptea (00–06)']=String(ep.filter(x=>new Date(x.st).getHours()<6).length);
+    o['cea mai mică']=String(Math.min(...v));
+    // mediile pe momente ale zilei
+    const mom=[[],[],[],[]]; gl.forEach(e=>mom[VC.moment(e.ts)].push(e.gluc.v));
+    ['Dim','Prânz','Cină','Seara'].forEach((n,i)=>{ const a=mom[i]; o['media '+n]=a.length?String(Math.round(a.reduce((x,y)=>x+y,0)/a.length)):''; });
+    // „Când măsori"
+    if(v.length>=10){ const IV=[[0,6],[6,11],[11,17],[17,21],[21,24]];
+      const cn=IV.map(([a,b])=>gl.filter(e=>{ const h=new Date(e.ts).getHours(); return h>=a&&h<b; }).length), cp=VC.repartizare(cn);
+      IV.forEach(([a,b],i)=>o['când măsori '+VC.doi(a)+'–'+VC.doi(b)]=(cn[i]&&!cp[i]?'<1':cp[i])+'%'); }
+    // zilele complete: insulină, mese, ICR, ISF
+    const c0=VC.miez(acum,P), cE=E.filter(e=>e.ts>=c0 && e.ts<azi0);
+    const zile=[...new Set(cE.map(e=>VC.cheie(e.ts)))];
+    const rap={}, baz={}, cor={}, hc={}, rapM=[{},{},{},{}], bolus=[];
+    cE.forEach(e=>{ const k=VC.cheie(e.ts);
+      if(e.type==='ins'){ const u=e.ins.u;
+        if(e.ins.kind==='bazala') baz[k]=(baz[k]||0)+u;
+        else { rap[k]=(rap[k]||0)+u; const mm=rapM[VC.moment(e.ts)]; mm[k]=(mm[k]||0)+u;
+          if(e.ins.kind==='corectie') cor[k]=(cor[k]||0)+1;
+          if(e.ins.kind==='bolus') bolus.push(u); } }
+      if(e.type==='meal') hc[k]=(hc[k]||0)+(e.meal.hc||0); });
+    const peZile=ob=>zile.map(k=>ob[k]||0);
+    ['dimineața','prânz','cină','seara'].forEach((n,i)=>o['rapidă '+n]=VC.medPoz(Object.values(rapM[i])));
+    o['rapidă pe zi']=VC.medPoz(peZile(rap)); o['bazală pe zi']=VC.medPoz(Object.values(baz));
+    o['corecții pe zi']=String(Math.round(VC.mediana(peZile(cor)))); o['carbohidrați pe zi']=VC.medPoz(peZile(hc));
+    o['zile complete']=String(zile.length||1); o['rapidă la masă']=VC.medPoz(bolus);
+    // ICR: fiecare masă cu bolusul nefolosit cel mai apropiat, la cel mult 25 de minute
+    const mese=cE.filter(e=>e.type==='meal'&&(e.meal.hc||0)>0), bol=cE.filter(e=>e.type==='ins'&&e.ins.kind==='bolus'), luat=new Array(bol.length).fill(false);
+    const icr=[[],[],[],[]];
+    mese.forEach(m=>{ let bi=-1, bd=Infinity;
+      bol.forEach((b,i)=>{ if(luat[i]) return; const d=Math.abs(b.ts-m.ts); if(d<bd){ bd=d; bi=i; } });
+      if(bi>=0 && bd<=25*60000){ luat[bi]=true; const u=bol[bi].ins.u;
+        if(u>0 && m.meal.hc>=5 && m.meal.hc<=200) icr[VC.moment(m.ts)].push(m.meal.hc/u); } });
+    ['dimineața','prânz','cină','seara'].forEach((n,i)=>{ const a=icr[i].filter(x=>x>0);
+      o['ICR '+n]=(a.length>=5?String(Math.round(VC.mediana(a))):'—')+(a.length?' · '+a.length:''); });
+    // ISF: corecții cu o glicemie în cele 30 min dinainte și una la 2–4 h după, fără masă sau altă insulină între
+    const glC=cE.filter(e=>e.type==='gluc'), isf=[];
+    cE.filter(e=>e.type==='ins'&&e.ins.kind==='corectie').forEach(c=>{
+      const ina=glC.filter(g=>c.ts-g.ts>=0 && c.ts-g.ts<=1800000), dupa=glC.filter(g=>g.ts-c.ts>=7200000 && g.ts-c.ts<=14400000);
+      if(!ina.length || !dupa.length) return;
+      const gi=ina.reduce((a,b)=>(c.ts-b.ts)<(c.ts-a.ts)?b:a), gd=dupa.reduce((a,b)=>b.ts<a.ts?b:a);
+      if(cE.some(e=>(e.type==='meal'&&e.ts>c.ts&&e.ts<gd.ts)||(e.type==='ins'&&e.ts>c.ts&&e.ts<=gd.ts))) return;
+      const sc=gi.gluc.v-gd.gluc.v; if(c.ins.u>0 && sc>0) isf.push(sc/c.ins.u); });
+    o['ISF estimat']=isf.length>=10?String(Math.round(VC.mediana(isf))):'—'; o['corecții folosibile']=String(isf.length);
+    // ziua tipică (doar datele graficului, la 30 și 90 de zile) și măsurătorile (la 7 zile)
+    if(P<=7) o['puncte în grafic']=String(v.length);
+    o._gl=gl.map(e=>({v:e.gluc.v, ts:e.ts}));
+    if(P>7){ const ore=gl.map(e=>{ const d=new Date(e.ts); return [d.getHours()+d.getMinutes()/60, e.gluc.v]; });
+      o._agp=[]; for(let i=0;i<=48;i++){ const h=i/2, w=ore.filter(([x])=>{ const d=Math.abs(x-h); return Math.min(d,24-d)<=1; }).map(([,y])=>y);
+        o._agp.push(w.length>=8?[w.length,VC.procent(w,.1),VC.procent(w,.25),VC.mediana(w),VC.procent(w,.75),VC.procent(w,.9)]:null); } }
+    return o;
+  },
+  // analizele de laborator: estimatul din cele 90 de zile care se încheie în ziua recoltării
+  laborator(){
+    return S.events.filter(e=>e.type==='lab'&&e.lab).sort((a,b)=>b.ts-a.ts).map(l=>{
+      const de=VC.miez(l.ts,89), pana=VC.miez(l.ts,-1);
+      const g=S.events.filter(e=>e.type==='gluc'&&e.ts>=de&&e.ts<pana);
+      const zile=new Set(g.map(e=>VC.cheie(e.ts))).size;
+      if(zile<45) return {ts:l.ts, txt:'fără estimare'};
+      const m=g.reduce((a,e)=>a+e.gluc.v,0)/g.length, est=Math.round((m+46.7)/28.7*10)/10, d=Math.round((l.lab.v-est)*10)/10;
+      return {ts:l.ts, txt:'estimat din jurnal '+VC.unu(est)+'% · diferență '+(d>0?'+'+VC.unu(d):d<0?'−'+VC.unu(-d):'0')};
+    });
+  },
+
+  /* ---- ce scrie pe ecran ---- */
+  citeste(){
+    const sb=document.getElementById('statsbody'), o={}, t=n=>(n?n.textContent:'').replace(/\s+/g,' ').trim();
+    sb.querySelectorAll('.stat').forEach(st=>{ const b=st.querySelector('b.num'), sp=st.querySelector(':scope > span'); if(!b||!sp) return;
+      const val=[...b.childNodes].filter(x=>x.nodeType===3).map(x=>x.nodeValue).join('').trim();
+      let k=t(sp); if(/^ICR /.test(k)){ const m=k.match(/^(ICR \S+)(?: · (\d+))?$/); o[m[1]]=val+(m[2]?' · '+m[2]:''); return; }
+      o[k]=val; });
+    const kpi=sb.querySelector('.tirkpi b'); if(kpi) o['timp în țintă']=t(kpi);
+    sb.querySelectorAll('.tirlegend > div').forEach(d=>{ const b=d.querySelector('b'); o['bandă '+t(d).replace(t(b),'').trim()]=t(b); });
+    const den=sb.querySelector('.dens');
+    if(den){ const x=t(den); let m=x.match(/Măsurători în (\d+) (?:de )?zile? din (\d+)/)||x.match(/Măsurători în o zi din (\d+)/);
+      if(m) o['zile cu glicemii']=(m.length===3?m[1]+' din '+m[2]:'1 din '+m[1]);
+      m=x.match(/([\d,]+) măsurători pe zi, raportat la toată perioada/); if(m) o['măsurători pe zi (toată perioada)']=m[1];
+      den.querySelectorAll('.cmcol').forEach(c=>{ o['când măsori '+t(c.querySelector('span'))]=t(c.querySelector('b')); }); }
+    const bare=[...sb.querySelectorAll('#mediiCard .bars .b i')].map(i=>t(i));
+    ['Dim','Prânz','Cină','Seara'].forEach((n,i)=>o['media '+n]=bare[i]!==undefined?bare[i]:'(lipsă)');
+    const mas=sb.querySelector('.mascard'); if(mas) o['puncte în grafic']=String(mas.querySelectorAll('svg circle').length);
+    o._lab=[...sb.querySelectorAll('.labrow .labe')].map(x=>t(x));
+    return o;
+  },
+
+  ruleaza(){
+    const acum=Date.now(), P0=PERIOD, rez=[], nume=k=>k.replace(/^bandă /,'timp în țintă, banda ').replace(/^media /,'media pe momente: ');
+    const prev={a:AGP_ANIM, n:NR_ANIM};
+    try{
+      for(const P of [7,30,90]){
+        PERIOD=P; STATS_PREV=null; AGP_ANIM=false; NR_ANIM=false; renderStats();
+        const ecr=VC.citeste(), ast=VC.asteptat(P, acum);
+        if(ast.gol){ rez.push({P, k:'glicemii în perioadă', e:'—', a:'niciuna', ok:true}); continue; }
+        Object.keys(ast).filter(k=>k[0]!=='_').forEach(k=>{ const e=ecr[k]===undefined?'(lipsă)':ecr[k];
+          rez.push({P, k:nume(k), e, a:ast[k], ok:e===ast[k]}); });
+        // datele graficului: funcția care desenează ziua tipică, primind aceleași glicemii, față de recalcul
+        if(ast._agp){ let ok=0, gr=[]; const app=agpBenzi(ast._gl).band;
+          ast._agp.forEach((a,i)=>{ const b=app[i]; const same = a===null ? !!b.empty : (!b.empty && b.n===a[0] && [b.lo,b.q1,b.md,b.q3,b.hi].every((x,j)=>Math.abs(x-a[j+1])<1e-6));
+            if(same) ok++; else gr.push(VC.doi(Math.floor(i/2))+':'+(i%2?'30':'00')); });
+          rez.push({P, k:'ziua tipică (49 de puncte ale graficului)', e:ok+' identice', a:'49', ok:ok===49, det:gr.slice(0,4).join(', ')}); }
+      }
+      const lab=VC.laborator(); PERIOD=90; STATS_PREV=null; renderStats(); const ecrLab=VC.citeste()._lab;
+      lab.forEach((l,i)=>{ const e=ecrLab[i]||'(lipsă)'; rez.push({P:'lab', k:'HbA1c de laborator din '+dNice(l.ts).replace(/^\S+, /,''), e, a:l.txt, ok:e===l.txt}); });
+    } finally {
+      PERIOD=P0; STATS_PREV=null; AGP_ANIM=prev.a; NR_ANIM=prev.n;
+      try{ renderStats(); }catch(e){}
+    }
+    return rez;
+  }
+};
+function shVerificaCifrele(){
+  openSheet2(`${antetInfo('diag', 'Verificarea cifrelor')}<div id="vcbody"><p class="muted">Se recalculează…</p></div>
+    <button class="btn btn-g" style="margin-top:12px" onclick="closeSheet2()">Închide</button>`);
+  setTimeout(()=>{
+    let rez; try{ rez=VC.ruleaza(); }catch(e){ const el=$('vcbody'); if(el) el.innerHTML=`<p>Verificarea nu s-a putut face: ${esc(String(e&&e.message||e))}</p>`; return; }
+    const rele=rez.filter(r=>!r.ok), per=P=>rez.filter(r=>r.P===P);
+    const el=$('vcbody'); if(!el) return;
+    const rand=r=>`<div class="dgrand"><span class="dgk">${esc(r.k)}</span><span class="dgv">${r.ok?`<span class="dgp ok">${DIAG_SEMN.ok}<span>${esc(r.e)}</span></span>`:`<span class="dgp rau">${DIAG_SEMN.rau}<span>pe ecran ${esc(r.e)} · recalculat ${esc(r.a)}${r.det?' ('+esc(r.det)+')':''}</span></span>`}</span></div>`;
+    el.innerHTML=`<div class="panou ${rele.length?'rau':'bine'} dgpanou"><div class="panoubk" style="margin:0"><span class="pbsemn" aria-hidden="true">${rele.length?'!':'✓'}</span><div class="pbtxt"><b>${rele.length?nUnit(rele.length,'cifre diferă','o cifră diferă'):'Toate cele '+rez.length+' de verificări se potrivesc'}</b><span>${rele.length?'din '+rez.length+' verificate. Trimite-mi o captură cu lista de mai jos.':'Cifrele din Statistici, refăcute cu o a doua metodă, din jurnalul de pe acest telefon.'}</span></div></div></div>
+      <p class="muted" style="margin:0 0 10px">O a doua metodă de calcul, scrisă separat de cea a ecranului, ia jurnalul de pe acest telefon și reface, pe 7, 30 și 90 de zile, toate cifrele din Statistici: media, HbA1c estimat, timpul în țintă, hipoglicemiile, insulina, mesele, ICR, ISF, datele graficelor și comparația cu laboratorul. Apoi le compară cu ce scrie pe ecran. Nu schimbă nimic în jurnal și nu trimite nimic nicăieri.</p>
+      ${rele.length?`<div class="dgcard"><div class="dgtitlu">Ce diferă</div>${rele.map(rand).join('')}</div>`:''}
+      ${[7,30,90].map(P=>`<details class="qagr"><summary><span class="qagt">${nUnit(P,'zile','o zi')}</span><span class="qagn">${per(P).filter(r=>r.ok).length} din ${per(P).length}</span><span class="qagv" aria-hidden="true"></span></summary><div class="qagc"><div class="dgcard">${per(P).map(rand).join('')}</div></div></details>`).join('')}
+      ${per('lab').length?`<details class="qagr"><summary><span class="qagt">Laborator</span><span class="qagn">${per('lab').filter(r=>r.ok).length} din ${per('lab').length}</span><span class="qagv" aria-hidden="true"></span></summary><div class="qagc"><div class="dgcard">${per('lab').map(rand).join('')}</div></div></details>`:''}`;
+  }, 30);
+}
+</script>
 </body>
 </html>
